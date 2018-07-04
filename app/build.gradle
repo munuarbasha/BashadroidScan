@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    flavorDimensions "default"
+    defaultConfig {
+        applicationId applicationId
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    productFlavors {
+        devel {
+            applicationId "com.bashadroid.scan.devel"
+        }
+        prod {
+            applicationId "com.bashadroid.scan"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:'+rootProject.kotlin_version
+    implementation 'com.android.support:appcompat-v7:'+rootProject.supportLibraryVersion
+    implementation 'com.android.support.constraint:constraint-layout:' +rootProject.constraintLayoutVersion
+    implementation 'com.jakewharton.timber:timber:'+rootProject.timberVersion
+    /*implementation 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion
+    implementation 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion*/
+    implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
+/*    annotationProcessor 'android.arch.lifecycle:compiler:' + rootProject.archLifecycleVersion
+    annotationProcessor 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion*/
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:' +rootProject.runnerVersion
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:' +rootProject.espressoVersion
+    api project(path: ':barcodescan')
+}
